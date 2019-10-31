@@ -3,40 +3,62 @@ package app;
 
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.SwingWorker;
 
 
 public class UtillityClass {
 	
-	public static void stopWatch() {
-		SwingWorker<Boolean, String> stopWatchThread=new SwingWorker<Boolean, String>(){
-			long startTime;
-			long endTime;
+	public static boolean valueChecker(Card a,Card b) {
+		if(a.getValue()==b.getValue()) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public static Long gameMech() {
+		Long score=(long) 0;
+		
+		
+		
+		
+		return score;
+		
+	}
+	
+	
+	
+	public static void stopWatch(SwingWorker<Void, Long> sw,JLabel lblStopwatch) {
+		
+		 SwingWorker<Void, Long> stopWatchThread=new SwingWorker<Void, Long>(){
+			long startTime=System.currentTimeMillis();;
+			
 
 			@Override
-			protected Boolean doInBackground() throws Exception {
-				startTime=System.currentTimeMillis();
-				
-				
-				
-				return null;
+			protected Void doInBackground() throws Exception {
+				while(true) {
+					long rez=(System.currentTimeMillis()-startTime)/1000;
+					
+					//System.out.println(rez);
+					publish(rez);
+				}
 			}
+			
 
 			@Override
-			protected void process(List<String> chunks) {
-				// TODO Auto-generated method stub
+			protected void process(List<Long> chunks) {
+				Long update=chunks.get((chunks.size()-1));
+				lblStopwatch.setText(Long.toString(update));
 				super.process(chunks);
 			};
 			
 
-			
-		
-		
-		
 		
 		
 	};
-	
+	stopWatchThread.execute();
+	sw=stopWatchThread;
 
 }
 }

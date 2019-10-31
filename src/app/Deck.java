@@ -11,11 +11,7 @@ import java.util.Random;
 public class Deck {
 	ArrayList<Card> cards = new ArrayList<>();
 	
-	
-	
-	
-	
-	
+
 
 	public ArrayList<Card> getCards() {
 		return cards;
@@ -54,12 +50,12 @@ public class Deck {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 6; i++) {
 			Card c = new Card((i + 1), prop.getProperty(Integer.toString((i + 1))));
 			result.add(c);
 		}
 		
-		for(int i=0; i<12;i++) {
+		for(int i=0; i<6;i++) {
 			int c=11;
 			result.add(result.get(i));
 			

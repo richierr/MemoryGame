@@ -6,12 +6,49 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class TestClass {
+	  
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+		long uptime = System.currentTimeMillis();
+
+		long days = TimeUnit.MILLISECONDS
+		    .toDays(uptime);
+		uptime -= TimeUnit.DAYS.toMillis(days);
+
+		long hours = TimeUnit.MILLISECONDS
+		    .toHours(uptime);
+		uptime -= TimeUnit.HOURS.toMillis(hours);
+
+		long minutes = TimeUnit.MILLISECONDS
+		    .toMinutes(uptime);
+		uptime -= TimeUnit.MINUTES.toMillis(minutes);
+
+		long seconds = TimeUnit.MILLISECONDS
+		    .toSeconds(uptime);
+
+		System.out.println(days+" "+hours+" "+minutes+" "+seconds);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 //		Deck d=new Deck();
 //		ArrayList<Card> inputdeck=d.shuffleMake();
 //		for(Card c:inputdeck) {
