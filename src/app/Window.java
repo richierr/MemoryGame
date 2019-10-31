@@ -22,16 +22,17 @@ import javax.swing.SwingWorker;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.awt.event.ActionEvent;
 
 public class Window extends JFrame {
-	Deck deck;
-	private Boolean gameIsOn = false;
-
+	//Deck deck;
 	private JPanel contentPane;
 	private JLabel lblStopwatch;
+	private boolean isTwoSelected;
+	private GameMatch match=new GameMatch(false);
 	
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -62,6 +63,7 @@ public class Window extends JFrame {
 
 		lblStopwatch = new JLabel("");
 
+
 		// -------------------------------------START DUGME
 		JButton btnStartGame = new JButton("Start game");
 
@@ -70,20 +72,20 @@ public class Window extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (gameIsOn == false) {
-					deck = new Deck();
+				if (match.isGameOn() == false) {
+					//deck = new Deck();
 					stopwatch = new StopWatchClass(lblStopwatch);
-					gameIsOn = true;
-
 					stopwatch.execute();
-					// btnStartGame.setText("Stop game");
-					// System.out.println("Ovde sam jer je gameison false bio");
+					match=new GameMatch();
+					match.setGameOn(true);
+					btnStartGame.setText("Stop game");
+					
 				} else {
-					gameIsOn = false;
+					match.setGameOn(false); 
 					stopwatch.cancel(true);
 					System.out.println(stopwatch.isCancelled());
 					btnStartGame.setText("Start game");
-					// System.out.println("ovde sam jer je bio true");
+					
 				}
 
 //				StopWatch stopwatch=new StopWatch();
@@ -104,28 +106,33 @@ public class Window extends JFrame {
 		});
 
 		JLabel lblTimeStatic = new JLabel("Time:");
-
-		JLabel lblTime = new JLabel("");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(57)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(btnStartGame)
-								.addGroup(gl_contentPane.createSequentialGroup().addComponent(lblTimeStatic)
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(lblStopwatch))
-								.addComponent(lblTime))
-						.addGap(84)
-						.addComponent(JpanelZaTabelu, GroupLayout.PREFERRED_SIZE, 468, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-						.addComponent(JpanelZaTabelu, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(143)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblTimeStatic)
-								.addComponent(lblStopwatch))
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(lblTime)
-						.addPreferredGap(ComponentPlacement.RELATED, 231, Short.MAX_VALUE).addComponent(btnStartGame)
-						.addGap(46)));
+					.addGap(57)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnStartGame)
+						.addComponent(lblTimeStatic)
+						.addComponent(lblStopwatch))
+					.addGap(84)
+					.addComponent(JpanelZaTabelu, GroupLayout.PREFERRED_SIZE, 468, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(JpanelZaTabelu, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(143)
+					.addComponent(lblTimeStatic)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblStopwatch)
+					.addPreferredGap(ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+					.addComponent(btnStartGame)
+					.addGap(46))
+		);
 		JpanelZaTabelu.setLayout(new GridLayout(3, 1, 0, 0));
 
 		// ----------------------------------------------------BUTTONS----------------------------------------
@@ -133,9 +140,20 @@ public class Window extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Icon icon1 = new ImageIcon(deck.cards.get(0).getAdress());
+				if(match.isGameOn()) {
+					Icon icon1 = new ImageIcon(match.getDeck().cards.get(0).getAdress());
+					btnNewButton.setIcon(icon1);
+					int rez=match.clickOnCard(0);
+					System.out.println(rez);
+					if(rez==1) {
+						
+					}else if(rez==-1) {
 
-				btnNewButton.setIcon(icon1);
+					}else {
+						
+					}
+					
+				}
 
 			}
 		});
@@ -146,7 +164,7 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(1).getAdress());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(1).getAdress());
 
 				btnNewButton_1.setIcon(icon1);
 
@@ -154,13 +172,16 @@ public class Window extends JFrame {
 		});
 
 		JpanelZaTabelu.add(btnNewButton_1);
+		
+		
+		
 
 		JButton btnNewButton_2 = new JButton("");
 		btnNewButton_2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(2).getAdress());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(2).getAdress());
 
 				btnNewButton_2.setIcon(icon1);
 
@@ -173,7 +194,7 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(3).getAdress());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(3).getAdress());
 
 				btnNewButton_3.setIcon(icon1);
 
@@ -186,7 +207,7 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(4).getAdress());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(4).getAdress());
 
 				btnNewButton_4.setIcon(icon1);
 
@@ -199,7 +220,7 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(5).getAdress());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(5).getAdress());
 
 				btnNewButton_5.setIcon(icon1);
 
@@ -212,8 +233,8 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(6).getAdress());
-				System.out.println(deck.cards.get(6).getValue());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(6).getAdress());
+				
 				btnNewButton_6.setIcon(icon1);
 
 			}
@@ -225,8 +246,8 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(7).getAdress());
-				System.out.println(deck.cards.get(7).getValue());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(7).getAdress());
+				
 				btnNewButton_7.setIcon(icon1);
 
 			}
@@ -238,8 +259,8 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(8).getAdress());
-				System.out.println(deck.cards.get(8).getValue());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(8).getAdress());
+				
 				btnNewButton_8.setIcon(icon1);
 
 			}
@@ -251,8 +272,8 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(9).getAdress());
-				System.out.println(deck.cards.get(9).getValue());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(9).getAdress());
+				
 				btnNewButton_9.setIcon(icon1);
 
 			}
@@ -264,8 +285,8 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(10).getAdress());
-				System.out.println(deck.cards.get(10).getValue());
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(10).getAdress());
+				
 				btnNewButton_10.setIcon(icon1);
 
 			}
@@ -277,9 +298,8 @@ public class Window extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Icon icon1 = new ImageIcon(deck.cards.get(11).getAdress());
-				System.out.println(deck.cards.get(11).getValue());
-
+				Icon icon1 = new ImageIcon(match.getDeck().cards.get(11).getAdress());
+				
 				btnNewButton_11.setIcon(icon1);
 
 			}

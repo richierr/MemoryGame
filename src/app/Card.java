@@ -1,10 +1,13 @@
 package app;
 
+import javax.swing.JButton;
+
 public class Card {
 	
 	private int value;
 	private String adress;
 	private String a="A";
+	private JButton button;
 	
 	
 	
