@@ -40,7 +40,7 @@ public class UtillityClass {
 				while(true) {
 					long rez=(System.currentTimeMillis()-startTime)/1000;
 					
-					//System.out.println(rez);
+					
 					publish(rez);
 				}
 			}

@@ -31,10 +31,23 @@ public class Window extends JFrame {
 	private GameMatch match=new GameMatch(false ,this);
 	private JPanel JpanelZaTabelu;
 	private StopWatchClass stopwatch;
+	private ArrayList<Player> topLista=new ArrayList<Player>();
+	private JButton btnStartGame;
 	
 	
 	
 	
+	
+	
+	
+	public ArrayList<Player> getTopLista() {
+		return topLista;
+	}
+
+	public void setTopLista(ArrayList<Player> topLista) {
+		this.topLista = topLista;
+	}
+
 	public StopWatchClass getStopwatch() {
 		return stopwatch;
 	}
@@ -50,7 +63,22 @@ public class Window extends JFrame {
 	public void setJpanelZaTabelu(JPanel jpanelZaTabelu) {
 		JpanelZaTabelu = jpanelZaTabelu;
 	}
+	
+	
 
+	public JButton getBtnStartGame() {
+		return btnStartGame;
+	}
+
+	public void setBtnStartGame(JButton btnStartGame) {
+		this.btnStartGame = btnStartGame;
+	}
+
+	
+	
+	
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -71,6 +99,7 @@ public class Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Window() {
+		topLista=new ArrayList<Player>();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 723, 500);
 		contentPane = new JPanel();
@@ -83,17 +112,16 @@ public class Window extends JFrame {
 
 
 		// -------------------------------------START DUGME
-		JButton btnStartGame = new JButton("Start game");
+		btnStartGame = new JButton("Start game");
 
 		btnStartGame.addActionListener(new ActionListener() {
-			//StopWatchClass stopwatch;
+			
 
 			public void actionPerformed(ActionEvent arg0) {
 //Ako je zaustavljena igra
 				if (match.isGameOn() == false) {
 					
-//					stopwatch = new StopWatchClass(lblStopwatch);
-//					stopwatch.execute();
+
 					match=new GameMatch(Window.this);
 					match.setGameOn(true);
 					stopwatch = new StopWatchClass(lblStopwatch,match.getScore());
@@ -109,24 +137,26 @@ public class Window extends JFrame {
 					
 				}
 
-//				StopWatch stopwatch=new StopWatch();
-//				if (gameIsOn==false) {
-//					gameIsOn=true;
-//					deck=new Deck();
-//					
-//					//UtillityClass.stopWatch( lblStopwatch);
-//					
-//					stopwatch.startStopwatch(lblStopwatch);
-//					
-//				}else {
-//					gameIsOn=false;
-//					stopwatch.stopStopwatch();
-//				}
+
 
 			}
 		});
 
 		JLabel lblTimeStatic = new JLabel("Time:");
+		
+		
+		
+//Top lista dugme		
+		JButton btnShowTopList = new JButton("Show toplist");
+		btnShowTopList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JDialogTopLista topListaDialog=new JDialogTopLista(topLista);
+				topListaDialog.setVisible(true);
+				
+				
+				
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -135,8 +165,9 @@ public class Window extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnStartGame)
 						.addComponent(lblTimeStatic)
-						.addComponent(lblStopwatch))
-					.addGap(84)
+						.addComponent(lblStopwatch)
+						.addComponent(btnShowTopList))
+					.addGap(80)
 					.addComponent(JpanelZaTabelu, GroupLayout.PREFERRED_SIZE, 468, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
@@ -150,182 +181,15 @@ public class Window extends JFrame {
 					.addComponent(lblTimeStatic)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblStopwatch)
-					.addPreferredGap(ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+					.addComponent(btnShowTopList)
+					.addGap(52)
 					.addComponent(btnStartGame)
 					.addGap(46))
 		);
 		JpanelZaTabelu.setLayout(new GridLayout(3, 1, 0, 0));
 
-		// ----------------------------------------------------BUTTONS----------------------------------------
-//		JButton btnNewButton = new JButton("");
-//		btnNewButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//
-//				if(match.isGameOn()) {
-//					Icon icon1 = new ImageIcon(match.getDeck().cards.get(0).getAdress());
-//					btnNewButton.setIcon(icon1);
-//					int rez=match.clickOnCard(0);
-//					System.out.println(rez);
-//					if(rez==1) {
-//						
-//					}else if(rez==-1) {
-//
-//					}else {
-//						
-//					}
-//					
-//				}
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton);
-//
-//		JButton btnNewButton_1 = new JButton("");
-//		btnNewButton_1.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(1).getAdress());
-//
-//				btnNewButton_1.setIcon(icon1);
-//
-//			}
-//		});
-//
-//		JpanelZaTabelu.add(btnNewButton_1);
-//		
-//		
-//		
-//
-//		JButton btnNewButton_2 = new JButton("");
-//		btnNewButton_2.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(2).getAdress());
-//
-//				btnNewButton_2.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_2);
-//
-//		JButton btnNewButton_3 = new JButton("");
-//		btnNewButton_3.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(3).getAdress());
-//
-//				btnNewButton_3.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_3);
-//
-//		JButton btnNewButton_4 = new JButton("");
-//		btnNewButton_4.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(4).getAdress());
-//
-//				btnNewButton_4.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_4);
-//
-//		JButton btnNewButton_5 = new JButton("");
-//		btnNewButton_5.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(5).getAdress());
-//
-//				btnNewButton_5.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_5);
-//
-//		JButton btnNewButton_6 = new JButton("");
-//		btnNewButton_6.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(6).getAdress());
-//				
-//				btnNewButton_6.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_6);
-//
-//		JButton btnNewButton_7 = new JButton("");
-//		btnNewButton_7.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(7).getAdress());
-//				
-//				btnNewButton_7.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_7);
-//
-//		JButton btnNewButton_8 = new JButton("");
-//		btnNewButton_8.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(8).getAdress());
-//				
-//				btnNewButton_8.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_8);
-//
-//		JButton btnNewButton_9 = new JButton("");
-//		btnNewButton_9.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(9).getAdress());
-//				
-//				btnNewButton_9.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_9);
-//
-//		JButton btnNewButton_10 = new JButton("");
-//		btnNewButton_10.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(10).getAdress());
-//				
-//				btnNewButton_10.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_10);
-//
-//		JButton btnNewButton_11 = new JButton("");
-//		btnNewButton_11.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				Icon icon1 = new ImageIcon(match.getDeck().cards.get(11).getAdress());
-//				
-//				btnNewButton_11.setIcon(icon1);
-//
-//			}
-//		});
-//		JpanelZaTabelu.add(btnNewButton_11);
+
 		contentPane.setLayout(gl_contentPane);
 	}
 }

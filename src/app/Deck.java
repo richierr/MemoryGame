@@ -82,9 +82,7 @@ public class Deck {
 
 		}
 		
-//		for(Card d:inputList) {
-//			d.setButton(new JButton());
-//		}
+
 		
 		return inputList;
 

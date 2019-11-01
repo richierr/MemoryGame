@@ -44,25 +44,15 @@ public class StopWatchClass extends SwingWorker<Void, Long>{
 			
 
 			publish(rez);
-			//return rez;
+			
 		}
-		//return (System.currentTimeMillis()-startTime);
+		
 	}
 	
 	
 	
 	
-//	@Override
-//	protected void done() {
-//		try {
-//			Long rez=get();
-//			System.out.println(rez);
-//		} catch (InterruptedException | ExecutionException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		super.done();
-//	}
+
 
 
 	@Override
@@ -88,7 +78,7 @@ public class StopWatchClass extends SwingWorker<Void, Long>{
 		    .toSeconds(uptime);
 		//----------------------------------------------------XXXXXXXX----------------------------------------
 		
-		//lblStopwatch.setText(Long.toString(update));
+		
 		lblStopwatch.setText("h:"+hours+" m:"+minutes+" s:"+seconds);
 		System.out.println(score);
 		super.process(chunks);

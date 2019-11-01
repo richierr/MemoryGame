@@ -15,7 +15,7 @@ public class GameMatch {
 	private Deck deck;
 	private Long score=(long) 0;
 	private Window frame;
-	//private ArrayList<Card> matched=new ArrayList<Card>();
+	
 	private ArrayList<Card> matched;
 	
 	
@@ -68,11 +68,11 @@ public class GameMatch {
 							eraseButtons();
 							selected.clear();
 						}
-						//Icon icon1 = new ImageIcon(GameMatch.this.getDeck().cards.get(0).getAdress());
+						
 						Icon icon1 = new ImageIcon(c.getAdress());
 						c.getButton().setIcon(icon1);
 						int rez=GameMatch.this.clickOnCard(c);
-						//System.out.println(rez);
+						
 						if(rez==1) {
 							eraseButtons();
 						}else if(rez==-1) {
@@ -85,10 +85,14 @@ public class GameMatch {
 							System.out.println("game over");
 							frame.getStopwatch().cancel(true);
 							score=frame.getStopwatch().getScore();
+							
 							System.out.println("Ovo je score :"+score);
-							String s = JOptionPane.showInputDialog("Input name");
+							String playersName = JOptionPane.showInputDialog("Input name");
 							
-							
+							frame.getTopLista().add(new Player(playersName, Math.toIntExact(score)));
+							frame.getBtnStartGame().setText("Start game");
+							isGameOn=false;
+							removeButtons();
 						}
 						
 					}
