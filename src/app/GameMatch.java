@@ -82,12 +82,12 @@ public class GameMatch {
 							
 						}
 						if(matched.size()==12) {
-							System.out.println("game over");
+							
 							frame.getStopwatch().cancel(true);
 							score=frame.getStopwatch().getScore();
 							
-							System.out.println("Ovo je score :"+score);
-							String playersName = JOptionPane.showInputDialog("Input name");
+							
+							String playersName = JOptionPane.showInputDialog("Input your name");
 							
 							frame.getTopLista().add(new Player(playersName, Math.toIntExact(score)));
 							frame.getBtnStartGame().setText("Start game");
@@ -170,20 +170,20 @@ public class GameMatch {
 			selected.add(c);
 			
 			if(selected.get(0).getValue()==selected.get(1).getValue()) {
-				//score++;
+				
 				//-------------------Ako su iste
 				
 				
 				isTwoSelected=false;
 				matched.add(selected.get(0));
 				matched.add(selected.get(1));
-				//selected.clear();
+				
 				return 1; 
 			}else {
 				//-------------------Ako nisu iste
 				isTwoSelected=false;
 				
-				//selected.clear();
+				
 				
 				return -1;
 			}

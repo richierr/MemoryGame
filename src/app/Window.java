@@ -132,7 +132,7 @@ public class Window extends JFrame {
 					match.setGameOn(false);
 					match.removeButtons();
 					stopwatch.cancel(true);
-					System.out.println(stopwatch.isCancelled());
+					
 					btnStartGame.setText("Start game");
 					
 				}

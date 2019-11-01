@@ -35,7 +35,7 @@ public class StopWatchClass extends SwingWorker<Void, Long>{
 		startTime=System.currentTimeMillis();
 		while(true) {
 			
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			
 			long rez=(System.currentTimeMillis()-startTime);
 
@@ -80,7 +80,7 @@ public class StopWatchClass extends SwingWorker<Void, Long>{
 		
 		
 		lblStopwatch.setText("h:"+hours+" m:"+minutes+" s:"+seconds);
-		System.out.println(score);
+		
 		super.process(chunks);
 	};
 	
