@@ -15,7 +15,23 @@ public class Card {
 		super();
 		this.value = value;
 		this.adress = adress;
+		this.button=new JButton();
 	}
+
+
+	
+
+	public JButton getButton() {
+		return button;
+	}
+
+
+
+
+	public void setButton(JButton button) {
+		this.button = button;
+	}
+
 
 
 

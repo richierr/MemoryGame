@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 
+import javax.swing.JButton;
+
 public class Deck {
 	ArrayList<Card> cards = new ArrayList<>();
 	
@@ -52,13 +54,14 @@ public class Deck {
 
 		for (int i = 0; i < 6; i++) {
 			Card c = new Card((i + 1), prop.getProperty(Integer.toString((i + 1))));
+			
 			result.add(c);
 		}
 		
 		for(int i=0; i<6;i++) {
-			int c=11;
-			result.add(result.get(i));
 			
+			
+			result.add(new Card(result.get(i).getValue(), result.get(i).getAdress()));
 		}
 
 		return result;
@@ -78,6 +81,11 @@ public class Deck {
 			inputList.set(i, c);
 
 		}
+		
+//		for(Card d:inputList) {
+//			d.setButton(new JButton());
+//		}
+		
 		return inputList;
 
 	}

@@ -1,6 +1,7 @@
 package app;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
@@ -8,13 +9,22 @@ import javax.swing.SwingWorker;
 
 public class StopWatchClass extends SwingWorker<Void, Long>{
 
-	JLabel lblStopwatch;
+	private JLabel lblStopwatch;
+	private Long score;
+	private long startTime;
 	
-	long startTime;
 	
 	
-	public StopWatchClass(JLabel lblStopwatch) {
+	
+	
+	public Long getScore() {
+		return score;
+	}
+
+
+	public StopWatchClass(JLabel lblStopwatch,Long score) {
 		super();
+		this.score=score;
 		this.lblStopwatch = lblStopwatch;
 		
 	}
@@ -32,16 +42,34 @@ public class StopWatchClass extends SwingWorker<Void, Long>{
 			
 			
 			
-//			System.out.println(rez);
+
 			publish(rez);
+			//return rez;
 		}
+		//return (System.currentTimeMillis()-startTime);
 	}
 	
 	
+	
+	
+//	@Override
+//	protected void done() {
+//		try {
+//			Long rez=get();
+//			System.out.println(rez);
+//		} catch (InterruptedException | ExecutionException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		super.done();
+//	}
+
+
 	@Override
 	protected void process(List<Long> chunks) {
 		Long update=chunks.get((chunks.size()-1));
 		//----------------------------------------------------XXXXXXXX----------------------------------------
+		score=10000-(update/1000);
 		long uptime = chunks.get((chunks.size()-1));
 
 		long days = TimeUnit.MILLISECONDS
@@ -62,6 +90,7 @@ public class StopWatchClass extends SwingWorker<Void, Long>{
 		
 		//lblStopwatch.setText(Long.toString(update));
 		lblStopwatch.setText("h:"+hours+" m:"+minutes+" s:"+seconds);
+		System.out.println(score);
 		super.process(chunks);
 	};
 	
